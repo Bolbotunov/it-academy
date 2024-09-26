@@ -1,17 +1,6 @@
 let str = prompt('введите слово или текст')
 
-function getStringNoInnerSpaces(str) {
-  let newWord = ''
-  for (let i = 0; i < str.length; i++) {
-  if (str[i] !== ' ') {
-     newWord += str[i]
-   } 
- }
-  str = newWord
-  return str
-}
-
-function getStringWithInnerSpaces(str) {
+function getStringNoSpaces(str) {
   let newWord = ''
   let step = 0
   let stepFromEnd = 0
@@ -21,11 +10,7 @@ function getStringWithInnerSpaces(str) {
   while (str[str.length - (1 + stepFromEnd)] === ' ') {
     stepFromEnd++
   }
-  for (let i = step; i < str.length - stepFromEnd; i++) {
-    newWord += str[i]
-  }
-  str = newWord
-  return str
+  return str.substring(step, str.length - stepFromEnd);
 }
 
 if (str === '') {
@@ -33,6 +18,5 @@ if (str === '') {
   } else if (str === null) {
     alert ('вы отменили операцию')
   } else {
-  let withInnerSpaces = confirm('удалить внутренние отступы тоже?')
-  alert(withInnerSpaces ? '*' + getStringNoInnerSpaces(str) + '*' : '*' + getStringWithInnerSpaces(str) + '*')
+  alert('*' + getStringNoSpaces(str) + '*')
 }
