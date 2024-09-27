@@ -6,11 +6,12 @@ function getStringNoSpaces(str) {
   let stepFromEnd = 0
   while (str[step] === ' ') {
     step++
-    if(step === str.length) {
+  }
+  
+  if(step === str.length) {
       console.log('строка состоит только из пробелов')
       return str = ''
     } 
-  }
   
   while (str[str.length - (1 + stepFromEnd)] === ' ') {
     stepFromEnd++
