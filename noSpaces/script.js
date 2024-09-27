@@ -6,11 +6,21 @@ function getStringNoSpaces(str) {
   let stepFromEnd = 0
   while (str[step] === ' ') {
     step++
+    if(step === str.length) {
+      console.log('строка состоит только из пробелов')
+      return str = ''
+    } 
   }
+  
   while (str[str.length - (1 + stepFromEnd)] === ' ') {
     stepFromEnd++
   }
-  return str.substring(step, str.length - stepFromEnd);
+  if (step === 0 && stepFromEnd === 0) {
+    console.log('по краям пробелов нет')
+    return str
+  } else {
+     return str.substring(step, str.length - stepFromEnd);
+  }
 }
 
 if (str === '') {
