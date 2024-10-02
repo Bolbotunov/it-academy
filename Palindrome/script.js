@@ -1,20 +1,13 @@
 let str = prompt('введите слово')
+
 function palindrome(str) {
-  str = str.toLowerCase().replace(/[^a-zа-еж-щыэюя]/g, '').replace(/ё/g, 'е')
-  function reverseStr(str) {
-    if (str === '') {
-    return str
-    } else {
-   return reverseStr(str.substring(1)) + str[0]
-    }
+  str = str.toLowerCase().replace(/ё/g, 'е').replace(/[^a-zа-щыэюя]/g, '')
+  for (let i = 0; i < str.length/2; i++) {
+    if (str[i] !== (str[str.length - (i + 1)])) {
+      return false;
+    } 
   }
-  let newStr = reverseStr(str)
-    console.log(str,newStr)
-  if(newStr === str) {
-    alert('это палиндром')
-  } else {
-    alert('это не палиндром')
-  }
+  return true
 }
 
-palindrome(str)
+alert(palindrome(str) ? 'это палиндром' : 'это не палиндром')
