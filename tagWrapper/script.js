@@ -1,10 +1,10 @@
-function buildWrapper(a) {
-  const dict = {
-   '<': '&lt',
-   '>': '&gt',
- '\"' :'&quot',
-  "'" :'&prime',
-  '&' :'&amp'
+function buildWrapper(tag) {
+   const dict = {
+   '<': '&lt;',
+   '>': '&gt;',
+ '\"' :'&quot;',
+  "'" :'&prime;',
+  '&' :'&amp;',
 }
   function deleteSymbols(str) {
     let text = ''
@@ -13,15 +13,15 @@ function buildWrapper(a) {
     }
     return text
   }
-  return function(b,c) {
-    let clearText = deleteSymbols(b)
+  return function(createdText,attributes) {
+    let clearText = deleteSymbols(createdText)
     let attr=''
-     for(let key in c) {
-       let attrValue = c[key]
+     for(let key in attributes) {
+       let attrValue = attributes[key]
        let attrValueClear = deleteSymbols(attrValue)
        attr +=` ${key}='${attrValueClear}'`
      }
-    return `<${a}${attr}>${clearText}</${a}>`
+    return `<${tag}${attr}>${clearText}</${tag}>`
   }
 }
 
@@ -32,3 +32,4 @@ console.log(wrapP("Однажды в студёную зимнюю пору"));
 console.log(wrapP("Однажды в студёную зимнюю пору", { lang: "ru" }));
 console.log(wrapP("Однажды в <студёную> зимнюю пору"));
 console.log(wrapH1("СТИХИ", { align: "center", title: "M&M's"}));
+
