@@ -19,4 +19,4 @@ function mood(colorsCount) {
       }
     }
   }
-mood(7);
+mood(5);
