@@ -9,14 +9,14 @@ function mood(colorsCount) {
     цветов:${colors.length - 1}! -  Вы ввели ${colorsCount}` )
     console.log( 'цветов: ' + colorsCount );
   for ( let i=1; i <= colorsCount; i++ ) {
-    const n = randomDiap(1,7);
-      if(!dict[n]) {
-        dict[n] = colors[n]
-        const colorName = dict[n];
+    let n 
+    do {
+      n = randomDiap(1,7);
+    } while (n in dict)
+      
+      dict[n] = colors[n]
+       const colorName = dict[n];
         console.log(colorName)
-      } else {
-        i--
-      }
     }
   }
 mood(5);
