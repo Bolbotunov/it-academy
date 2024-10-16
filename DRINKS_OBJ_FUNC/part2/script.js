@@ -4,9 +4,10 @@ const deleteBtn = document.querySelector('.deleteBtn')
 const showListBtn = document.querySelector('.showListBtn ')
 const infoBox = document.querySelector('.infoBox__text')
 
+
 function ObjStorageFunc() {
     let dict = {}
-    this.getObj = function(){
+    this.getObj = function() {
       console.log(dict)
     }
     this.addValue = function(key,value) {
@@ -16,18 +17,20 @@ function ObjStorageFunc() {
       return dict[key]
     }
     this.deleteValue = function(key) {
-      return key in dict ? (delete dict[key] && true) : false
+        if(key in dict) {
+            delete dict[key]
+            return true
+        } else {
+            return false
+        }
     }
     this.getKeys = function() {
-        let keysArr = []
-      for(key in dict) {
-        keysArr.push(key)
-      }
-      return keysArr
+        return Object.keys(dict)
     }
   }
+  
   let drinkStorage = new ObjStorageFunc()
-
+  
   addBtn.addEventListener('click', function() {
     let key = prompt('Введите название напитка')
     let value = {}
@@ -53,8 +56,9 @@ deleteBtn.addEventListener('click', function() {
     infoBox.innerHTML = drinkDelete ? `напиток ${drinkName} удален из справочника`: `напитка ${drinkName} нет в справочнике`
 })
 
-showListBtn.addEventListener('click', function(){
+showListBtn.addEventListener('click', function() {
     let list = drinkStorage.getKeys()
+    list = list.sort((a, b) => a.localeCompare(b))
     let content = ''
     for(let i=0; i < list.length; i++) {
         content += `${i + 1}. ${list[i]}<br>`
