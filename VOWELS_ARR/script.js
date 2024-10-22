@@ -1,5 +1,4 @@
 let str = prompt("Введите строку:");
-str = str.toLowerCase().split('')
 let sumVowels = 0
 const obj = {
     а:1,
@@ -15,16 +14,19 @@ const obj = {
   }
 
 function vowelsForEach(str) {
+    str = str.toLowerCase().split('')
     str.forEach(letter => obj[letter] ? sumVowels++ : 0)
     return sumVowels
   }
 
   function vowelsFilter(str) {
+    str = str.toLowerCase().split('')
     sumVowels = str.filter(letter => obj[letter])
     return sumVowels.length
   }
 
   function vowelsReduce(str) {
+    str = str.toLowerCase().split('')
     return str.reduce((acc, letter) => (obj[letter] || 0) + acc, 0)
   }
 
