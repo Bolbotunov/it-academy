@@ -14,17 +14,19 @@ var A3 = [5, 8, 7];
 
 function deepComp(H1, H2) {
   if (H1 === H2) { return true }
-  if (typeof H1 === 'string' && typeof H2 === 'string') { return H1 === H2 }
-  if (H1 == null || H2 == null || (!isNaN(H1))) { return false }
+  if ((typeof H1 === 'string' || typeof H1 === 'number') && (typeof H1 === typeof H2)) { return H1 === H2 || (typeof H1 === 'number' && Number.isNaN(H1) && Number.isNaN(H2))}
+  if (H1 == null || H2 == null) { return false }
+
   if (Array.isArray(H1) && Array.isArray(H2)) {
     if (H1.length !== H2.length) { return false }
     for (let i=0; i < H1.length; i++) {
-      if (!H2.includes(H1[i]) || !deepComp(H1[i],H2[i])) {
+      if (!deepComp(H1[i],H2[i])) {
         return false
       }
     }
   }
 
+  if (Array.isArray(H1) !== Array.isArray(H2)) { return false }
   let keysH1 = Object.keys(H1)
   let keysH2 = Object.keys(H2)
 
@@ -36,9 +38,6 @@ function deepComp(H1, H2) {
   }
   return true
 }
-
-
-
 
 function test(){
 console.log(`тест (H1 равно H2): ${deepComp(H1, H2) ? 'пройден' : 'не пройден'}`); // true
