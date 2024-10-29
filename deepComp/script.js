@@ -1,45 +1,32 @@
-
-var H1 = { a: 5, b: { b1: 6, b2: 7 } };
-var H2 = { b: { b1: 6, b2: 7 }, a: 5 };
-var H3 = { a: 5, b: { b1: 6 } };
-var H4 = { a: 5, b: { b1: 66, b2: 7 } };
-var H5 = { a: 5, b: { b1: 6, b2: 7, b3: 8 } };
-var H6 = { a: null, b: undefined, c: Number.NaN };
-var H7 = { c: Number.NaN, b: undefined, a: null };
-var H8 = { a: 5, b: 6 };
-var H9 = { c: 5, d: 6 };
-var H10 = { a: 5 };
-var A1 = [5, 7];
-var A2 = [5, 5, 7];
-var A3 = [5, 8, 7];
-
 function deepComp(H1, H2) {
-  if (H1 === H2) { return true }
-  if ((typeof H1 === 'string' || typeof H1 === 'number') && (typeof H1 === typeof H2)) { return H1 === H2 || Number.isNaN(H1) && Number.isNaN(H2)}
+  if (typeof H1 !== typeof H2) { return false }
+  if (Number.isNaN(H1) && Number.isNaN(H2)) { return true }
+  if ((typeof H1 !== 'object' || H1 === null) && (typeof H2 !== 'object' || H2 === null)) { return H1 === H2 } 
   if (H1 == null || H2 == null) { return false }
 
-  if (Array.isArray(H1) !== Array.isArray(H2)) return false;
-
-  if (H1.length !== H2.length) { return false }
+  if (Array.isArray(H1) !== Array.isArray(H2)) { return false }
+  if (Array.isArray(H1) && Array.isArray(H2)) {
+    if (H1.length !== H2.length) { return false }
     for (let i=0; i < H1.length; i++) {
       if (!deepComp(H1[i],H2[i])) {
         return false
       }
     }
+    return true
+  }
 
   let keysH1 = Object.keys(H1)
   let keysH2 = Object.keys(H2)
-
   if (keysH1.length !== keysH2.length) { return false }
   for (key of keysH1) {
     if (!keysH2.includes(key) || !deepComp(H1[key], H2[key])) {
-      return false 
+      return false
     }
   }
   return true
 }
 
-function test(){
+function test() {
 console.log(`тест (H1 равно H2): ${deepComp(H1, H2) ? 'пройден' : 'не пройден'}`); // true
 console.log(`тест (H1 не равно H3): ${!deepComp(H1, H3) ? 'пройден' : 'не пройден'}`); // false
 console.log(`тест (H1 не равно H4): ${!deepComp(H1, H4) ? 'пройден' : 'не пройден'}`); // false
