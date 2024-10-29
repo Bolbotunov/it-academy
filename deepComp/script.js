@@ -1,3 +1,17 @@
+var H1 = { a: 5, b: { b1: 6, b2: 7 } };
+var H2 = { b: { b1: 6, b2: 7 }, a: 5 };
+var H3 = { a: 5, b: { b1: 6 } };
+var H4 = { a: 5, b: { b1: 66, b2: 7 } };
+var H5 = { a: 5, b: { b1: 6, b2: 7, b3: 8 } };
+var H6 = { a: null, b: undefined, c: Number.NaN };
+var H7 = { c: Number.NaN, b: undefined, a: null };
+var H8 = { a: 5, b: 6 };
+var H9 = { c: 5, d: 6 };
+var H10 = { a: 5 };
+var A1 = [5, 7];
+var A2 = [5, 5, 7];
+var A3 = [5, 8, 7];
+
 function deepComp(H1, H2) {
   if (typeof H1 !== typeof H2) { return false }
   if (Number.isNaN(H1) && Number.isNaN(H2)) { return true }
