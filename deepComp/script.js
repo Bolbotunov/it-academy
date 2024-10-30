@@ -15,11 +15,9 @@ var A3 = [5, 8, 7];
 function deepComp(H1, H2) {
   if (typeof H1 !== typeof H2) { return false }
   if (Number.isNaN(H1) && Number.isNaN(H2)) { return true }
-  if ((typeof H1 !== 'object' || H1 === null) && (typeof H2 !== 'object' || H2 === null)) { return H1 === H2 } 
-  if (H1 == null || H2 == null) { return false }
-
+  if (typeof H1 !== 'object' || H1 === null || H2 === null) { return H1 === H2 }
   if (Array.isArray(H1) !== Array.isArray(H2)) { return false }
-  if (Array.isArray(H1) && Array.isArray(H2)) {
+  if (Array.isArray(H1)) {
     if (H1.length !== H2.length) { return false }
     for (let i=0; i < H1.length; i++) {
       if (!deepComp(H1[i],H2[i])) {
@@ -28,12 +26,11 @@ function deepComp(H1, H2) {
     }
     return true
   }
-
   let keysH1 = Object.keys(H1)
   let keysH2 = Object.keys(H2)
   if (keysH1.length !== keysH2.length) { return false }
   for (key of keysH1) {
-    if (!keysH2.includes(key) || !deepComp(H1[key], H2[key])) {
+    if (!(key in H2) || !deepComp(H1[key], H2[key])) {  
       return false
     }
   }
