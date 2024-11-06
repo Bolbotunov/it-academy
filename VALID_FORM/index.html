@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Valid Form</title>
+</head>
+<body>
+    <div class="wrapper">
+    <form name="form" action="https://fe.it-academy.by/TestForm.php">
+        <div class="form__item">
+          <div class="item__wrapper">
+            <label>Разработчики:</label>
+            <input type="text" name="dev" class="input-field">
+          </div>
+          <div class="error">
+            <div class="error-message"></div>
+            <div class="error-cross">
+              <span class="span span-one"></span>
+              <span class="span span-two"></span>
+            </div>
+          </div>
+        </div>
+        <div class="form__item">
+          <div class="item__wrapper">
+            <label>Название сайта:</label>
+            <input type="text" name="sitename" class="input-field">
+          </div>
+          <div class="error">
+            <div class="error-message"></div>
+            <div class="error-cross">
+              <span class="span span-one"></span>
+              <span class="span span-two"></span>
+            </div>
+          </div>
+        </div>
+        <div class="form__item">
+          <div class="item__wrapper">
+            <label>URL сайта:</label>
+            <input type="text" name="siteurl" class="input-field">
+          </div>
+          <div class="error">
+            <div class="error-message"></div>
+            <div class="error-cross">
+              <span class="span span-one"></span>
+              <span class="span span-two"></span>
+            </div>
+          </div>
+        </div>
+        <div class="form__item">
+          <div class="item__wrapper">
+            <label>Дата запуска:</label>
+            <input type="date" name="date">
+          </div>
+          <div class="error">
+            <div class="error-message"></div>
+            <div class="error-cross">
+              <span class="span span-one"></span>
+              <span class="span span-two"></span>
+            </div>
+          </div>
+        </div>
+        <div class="form__item">
+          <div class="item__wrapper">
+            <label>Посетителей в сутки:</label>
+            <input type="number" name="visitors" class="number-input">
+          </div>
+          <div class="error">
+            <div class="error-message"></div>
+            <div class="error-cross">
+              <span class="span span-one"></span>
+              <span class="span span-two"></span>
+            </div>
+          </div>
+        </div>
+        <div class="form__item">
+          <div class="item__wrapper">
+            <label>E-mail для связи:</label>
+            <input type="text" name="email" class="short-input">
+          </div>
+          <div class="error">
+            <div class="error-message"></div>
+            <div class="error-cross">
+              <span class="span span-one"></span>
+              <span class="span span-two"></span>
+            </div>
+          </div>
+        </div>
+        <div class="form__item">
+          <div class="item__wrapper">
+            <label>Рубрика каталога:</label>
+            <select name="division">
+              <option value="1">здоровье</option>
+              <option value="2">домашний уют</option>
+              <option value="3">бытовая техника</option>
+            </select>
+          </div>
+          <div class="error">
+            <div class="error-message"></div>
+            <div class="error-cross">
+              <span class="span span-one"></span>
+              <span class="span span-two"></span>
+            </div>
+          </div>
+        </div>
+        <div class="form__item">
+          <div class="item__wrapper">
+            <label>Размещение:</label>
+            <div>
+              <label><input type="radio" name="payment" value="1">бесплатное</label>
+              <label><input type="radio" name="payment" value="2">платное</label>
+              <label><input type="radio" name="payment" value="3">VIP</label>
+            </div>
+          </div>
+          <div class="error">
+            <div class="error-message"></div>
+            <div class="error-cross">
+              <span class="span span-one"></span>
+              <span class="span span-two"></span>
+            </div>
+          </div>
+        </div>
+        <div class="form__item">
+          <div class="item__wrapper">
+            <label>Разрешить отзывы:</label>
+            <input type="checkbox" name="votes">
+          </div>
+          <div class="error">
+            <div class="error-message"></div>
+            <div class="error-cross">
+              <span class="span span-one"></span>
+              <span class="span span-two"></span>
+            </div>
+          </div>
+        </div>
+        <div class="form__item">
+          <div class="item__wrapper">
+            <label>Описание сайта:</label>
+            <textarea name="description" class="input-field"></textarea>
+          </div>
+          <div class="error">
+            <div class="error-message"></div>
+            <div class="error-cross">
+              <span class="span span-one"></span>
+              <span class="span span-two"></span>
+            </div>
+          </div>
+        </div>
+        <div class="form__item btn">
+          <input type="submit" value="Опубликовать">
+        </div>
+      </form>
+    </div>
+      <script src="script.js"></script>
+  </body>
+</html>
