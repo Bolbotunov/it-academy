@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=UTF-8>
+    <title>drag&amp;drop</title>
+  </head>
+  <body style='min-height: 100vh'>
+<img src='http://fe.it-academy.by/Sites/0000007/sax.jpg'>
+<img src='http://fe.it-academy.by/Sites/0000007/Yin_and_Yang.png' width=100>
+<img src='http://fe.it-academy.by/Sites/0000007/Man-and-woman.png' width=150>
+<img src='http://fe.it-academy.by/Sites/0000007/No_smoking.png' style='padding-left: 50px'>
+<script>
+    window.addEventListener('load', function (e){
+        let img = document.getElementsByTagName('img')
+        let imgArray = Array.from(img)
+        let leftPosition = [];
+        let topPosition = [];
+        let currentImage
+        let zInd = 1
+        imgArray.forEach((image) => {
+            leftPosition.push(image.getBoundingClientRect().left)
+            topPosition.push(image.getBoundingClientRect().top)
+            image.style.cursor = 'grab'
+        })
+        imgArray.forEach((image, i) => {
+            image.style.position = 'absolute'
+            image.style.left = `${leftPosition[i]}px`
+            image.style.top = `${topPosition[i]}px`
+            image.style.zIndex = 0
+            image.addEventListener('mousedown', function(e) {
+                event.preventDefault()
+                currentImage = e.target
+                currentImage.style.zIndex = ++zInd
+                currentImageX = e.pageX - currentImage.getBoundingClientRect().left
+                currentImageY = e.pageY - currentImage.getBoundingClientRect().top
+                document.addEventListener('mousemove', mouseMoveFn)
+                document.addEventListener('mouseup', mouseUpFn)
+
+            })
+        })
+
+        function mouseMoveFn(e) {
+            event.preventDefault()
+                currentImage.style.cursor = 'grabbing'
+                let currentCoordinatesX = e.pageX - currentImageX
+                let currentCoordinatesY = e.pageY - currentImageY
+                currentImage.style.left = `${currentCoordinatesX}px`
+                currentImage.style.top = `${currentCoordinatesY}px`
+            }
+
+            function mouseUpFn(e) {
+                event.preventDefault()
+                currentImage.style.cursor = 'grab'
+                document.removeEventListener('mousemove', mouseMoveFn);
+                document.removeEventListener('mouseup', mouseUpFn);
+               }
+       
+    })
+</script>
+  </body>
+</html>
