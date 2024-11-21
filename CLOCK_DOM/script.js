@@ -1,4 +1,3 @@
-
 let container__btn = document.querySelector('.container__btn')
 let btn = document.querySelector('.btn')
 let input = document.querySelector('.input')
@@ -61,8 +60,10 @@ function createElements(addClassElem, whereAddElement) {
 
 let clock
 let val
+let sizeOfTimeBlock
 function buildClock() {
   val = input.value
+  sizeOfTimeBlock = val / 200
   if (val < 200 || val > 800) {
     return alert('введен недопустимый размер')
   }
@@ -103,6 +104,7 @@ function createHours() {
   timeBlock = document.querySelector('.time')
     for (let key in timeStyles) {
     timeBlock.style[key] = `${timeStyles[key]}`
+    timeBlock.style.fontSize = `${sizeOfTimeBlock}rem`
     }
   showArrows()
   showDate()
