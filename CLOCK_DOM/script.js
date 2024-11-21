@@ -1,15 +1,7 @@
+
 let container__btn = document.querySelector('.container__btn')
 let btn = document.querySelector('.btn')
 let input = document.querySelector('.input')
-let clock
-let hoursEl
-let hoursVal
-let div
-let timeBlock
-let secondsArrow
-let minutesArrow
-let val
-let hoursArrow
 let countHours = 12
 let step = 360 / countHours
 let angleInDegreesStart = 90
@@ -48,11 +40,11 @@ let timeStyles = {
 }
 
 let arrowsStyles = {
-  width: '4px',
+  width: '2%',
   height: '50%',
   backgroundColor: 'black',
   position:'absolute',
-  borderRadius:'40%',
+  borderRadius:'20%',
   transformOrigin: '49% 94%',
   bottom:'47%',
   transform:'rotate(0deg)',
@@ -61,11 +53,14 @@ let arrowsStyles = {
 btn.addEventListener('click', buildClock)
 
 function createElements(addClassElem, whereAddElement) {
+  let div
   div = document.createElement('div')
   div.classList.add(addClassElem)
   whereAddElement.appendChild(div)
 }
 
+let clock
+let val
 function buildClock() {
   val = input.value
   if (val < 200 || val > 800) {
@@ -82,8 +77,10 @@ function buildClock() {
   createHours()
 }
 
-
+let timeBlock
 function createHours() {
+  let hoursEl
+  let hoursVal
   hoursVal = val / 100 * 10
   let padding = val * 0.075
   let radius = val / 2 - padding;
@@ -111,6 +108,10 @@ function createHours() {
   showDate()
 }
 
+
+let secondsArrow
+let minutesArrow
+let hoursArrow
 function showArrows() {
   createElements('secondsArrow', clock)
   createElements('minutesArrow', clock)
@@ -121,9 +122,9 @@ function showArrows() {
   for (let key in arrowsStyles) {
     [secondsArrow, minutesArrow, hoursArrow].forEach(item => item.style[key] = `${arrowsStyles[key]}`)
   }
-  minutesArrow.style.width = '6px'
+  minutesArrow.style.width = '4%'
   minutesArrow.style.height = '37%'
-  hoursArrow.style.width = '10px'
+  hoursArrow.style.width = '6%'
   hoursArrow.style.height = '27%'
 }
 
