@@ -80,9 +80,8 @@ function buildClock() {
 
 let timeBlock
 function createHours() {
-  let hoursEl
-  let hoursVal
-  hoursVal = val / 100 * 10
+  let hoursVal = val / 100 * 10
+  let sizeNumbersOfClock = hoursVal / 100 * 4
   let padding = val * 0.075
   let radius = val / 2 - padding;
     for (let i = 0; i < countHours; i++) {
@@ -99,6 +98,7 @@ function createHours() {
   hoursEl.style.height = `${hoursVal}px`
   hoursEl.style.left = `calc(50% + ${x - hoursVal / 2}px)`
   hoursEl.style.top = `calc(50% - ${y + hoursVal / 2}px)`
+  hoursEl.style.fontSize = `${sizeNumbersOfClock}rem`
   }
   createElements('time', clock)
   timeBlock = document.querySelector('.time')
