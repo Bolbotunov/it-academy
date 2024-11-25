@@ -1,108 +1,64 @@
 function calculator(str) {
-  let stack = []
-    let operations = {
-    '-': true,
-    '+': true,
-    '*': true,
-    '/': true,
-    }
-    let operation
-    let minus = false
-    let currentSlice = str
-    let numInBrackets = null
-    let numWithBrackets = null
-
-// ================== если есть скобки =============================================
-for (let i=0; i < str.length; i++) {
-  if (str[i] === '(' && stack.length === 0) {
-    stack.push(str[i])
-    indexStart = i + 1
-  } else if (str[i] === '(' && stack.length !== 0) {
-    indexStart = i + 1
-  } else if(str[i] === ')') {
-    stack = []
-    indexEnd = i
-    currentSlice = str.slice(indexStart, indexEnd)
-   console.log(currentSlice)
-    break
+  const operations = {
+    '-': 0,
+    '+': 0,
+    '*': 1,
+    '/': 1,
   }
-}
-
-for (let i = 0; i < currentSlice.length; i++) {
-  if(currentSlice[i] in operations && i !== 0 ) {
-    numInBrackets = true
-    break
-  }
-}
-
-if(!numInBrackets) {
-  currentSlice = str.replace('(' + currentSlice + ')', currentSlice)
-}
-
-// ================== если есть * или / =====================================================
-
-if(currentSlice.indexOf('*') !== -1  || currentSlice.indexOf('/') !== -1 ) {
-  currentSlice = currentSlice.split(/[-+]/)
-  for(let i=0; i < currentSlice.length; i++) {
-    if((currentSlice[i].includes('*') || currentSlice[1].includes('/')) && currentSlice.indexOf(currentSlice[i]) === 1 && currentSlice[0] === '') {
-      minus = true
-      currentSlice = currentSlice[i]
-      break
-    } else if (currentSlice[i].includes('*') || currentSlice[i].includes('/')) {
-      currentSlice = currentSlice[i]
-      break
-    } else {
-      continue
-    }
-  }
-
-  for (let i=0; i < currentSlice.length; i++) {
-    if (currentSlice[i] in operations) {
-      operation = currentSlice[i]
-      break
-    }
-  }
-
-  if (minus === true) {
-    currentSlice = '-' + currentSlice
-  }
-currentSlice = currentSlice.split(/[*/]/)
-
-// если нет * и / =====================================================
-} else {
-  if(currentSlice[0] === '-'){
-    minus = true
-    currentSlice = currentSlice.slice(1)
+  const brackets = {
+      '(': false,
+      ')': true,
   }
   
-  for (let i = (minus === true) ? 1 : 0; i < currentSlice.length; i++) {
-    if (currentSlice[i] in operations && currentSlice[i+1] !== '-') {
-      operation = currentSlice[i]
-      break
-    } else if (currentSlice[i] in operations && (currentSlice[i+1] && currentSlice[i]) === '-') {
-      operation = '+'
-      break
-    } else if (currentSlice[i] in operations && (currentSlice[i+1] || currentSlice[i]) === '-'){
-      operation = '-'
-      break
+str = str.match(/(\d+(\.\d+)?|\D)/g)
+for (let i=0; i < str.length; i++) {
+  if(str[i] === '-' && (!str[i-1] || str[i-1] === '(')) {
+    str.splice(i, 2, '-' + str[i+1])
     }
-  }
-
-  currentSlice = currentSlice.split(/[-+]/)
-    if(minus === true) {
-    currentSlice[0] = '-' + currentSlice[0]
-  }
 }
 
-currentSlice = currentSlice.filter(item => item !== '');
-let [a, b] = currentSlice.map(Number);
+let completeStack = []
+let operatorsStack = []
+str.forEach((item, index) => {
+  if (item in brackets) { 
+    if (!brackets[item]) { 
+      operatorsStack.push(item)
+     } else {
+      while (operatorsStack.length && operatorsStack[operatorsStack.length - 1] !== '(') {
+        completeStack.push(operatorsStack.pop())
+     }
+       operatorsStack.pop()
+     }
+   } else if (!(item in operations)) {
+      completeStack.push(item)
+   } else if (item in operations) {
+      if (operatorsStack.length === 0 || operatorsStack[operatorsStack.length - 1] === '(' ) {
+         operatorsStack.push(item)
+      } else if (operations[item] > operations[operatorsStack[operatorsStack.length - 1]]) {
+         operatorsStack.push(item)
+      } else if(operations[item] <= operations[operatorsStack[operatorsStack.length - 1]]) {
+         completeStack.push(operatorsStack.pop())
+         operatorsStack.push(item)
+      }
+   }
+})
 
-    if(isNaN(a)|| isNaN(b)) {
-        console.log('введен недопустимый символ')
-        return
-    }
-
-    switch(operation) {
+while (operatorsStack.length) {
+   completeStack.push(operatorsStack.pop())
+}
+let a
+let b 
+let stack = []
+let operation
+completeStack.forEach((item) => {
+  if (!(item in operations)) {
+    stack.push(item)
+  } else {
+    operation = item
+    a = Number(stack[stack.length - 2])
+    b = Number(stack[stack.length - 1])
+    
+     switch(operation) {
       case '+':
         result = a + b
         break;
@@ -119,14 +75,12 @@ let [a, b] = currentSlice.map(Number);
         console.log('нет такой операции');
         result = null;
     }
-
-    str = str.replace(a + operation + b, result)
-  
-if(str == result) {
-  return Number(str)
-} else {
-  return calculator(str)
-}
+    stack.pop()
+    stack.pop()
+    stack.push(result)
+  }
+})
+return stack.pop()
 }
 
-console.log(calculator('-5*10+5'))
+console.log(calculator('2*(-3+1)'))
