@@ -19,14 +19,17 @@ function buildClock() {
         return alert('введен недопустимый размер');
     }
     container__btn.innerHTML = '';
-    // container__btn.appendChild(input);
-    // container__btn.appendChild(btn);
     canvas = document.createElement('canvas');
     canvas.width = val;
     canvas.height = val;
     canvas.id = 'clockCanvas';
     container__btn.appendChild(canvas);
     ctx = canvas.getContext('2d');
+    createClock()
+    showDate()
+  }
+
+  function createClock() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
     ctx.arc(val / 2, val / 2, val / 2, 0, Math.PI * 2);
@@ -34,40 +37,32 @@ function buildClock() {
     ctx.fill();
     ctx.closePath();
     buildHours()
-
   }
 
-   
+function buildHours() {
+    let hoursVal = val / 100 * 10;
+    let padding = val * 0.075;
+    let radius = val / 2 - padding;
+    let sizeNumbersOfClock = hoursVal / 100 * 4;
+    for (let i = 0; i < countHours; i++) {
+      let angleInRadians = (angleInDegreesStart + step * i) * (Math.PI / 180);
+      let x = radius * Math.cos(angleInRadians) + val / 2;
+      let y = radius * Math.sin(angleInRadians) + val / 2;
+    ctx.beginPath();
+    ctx.arc(x, y, hoursVal / 2, 0, Math.PI * 2);
+    ctx.fillStyle = 'green';
+    ctx.fill();
+    ctx.closePath();
 
-    function buildHours() {
-      let hoursVal = val / 100 * 10;
-      let padding = val * 0.075;
-      let radius = val / 2 - padding;
-      let sizeNumbersOfClock = hoursVal / 100 * 4;
-      for (let i = 0; i < countHours; i++) {
-        let angleInRadians = (angleInDegreesStart + step * i) * (Math.PI / 180);
-        let x = radius * Math.cos(angleInRadians) + val / 2;
-        let y = radius * Math.sin(angleInRadians) + val / 2;
-        
-        ctx.beginPath();
-        ctx.arc(x, y, hoursVal / 2, 0, Math.PI * 2);
-        ctx.fillStyle = 'green';
-        ctx.fill();
-        ctx.closePath();
-
-        ctx.beginPath();
-        ctx.font = `${sizeNumbersOfClock}rem  Arial`;
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillStyle = 'white';
-        ctx.fillText(1 + i, x, y);
-        ctx.closePath();
+    ctx.beginPath();
+    ctx.font = `${sizeNumbersOfClock}rem  Arial`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = 'white';
+    ctx.fillText(1 + i, x, y);
+    ctx.closePath();
     }
-    showDate()
 }
-
-
-
 
 function showDate() {
     let date = new Date();
@@ -79,11 +74,10 @@ function showDate() {
     let secondsAngle = seconds * stepOfArrow;
     let minutesAngle = minutes * stepOfArrow + partOfMinute;
     let hoursAngle = hours * stepOfArrowHours + partOfHour;
-
+    createClock()
     let secondsX = val / 2 + (val * 0.4) * Math.cos(secondsAngle * (Math.PI / 180) - Math.PI / 2);
     let secondsY = val / 2 + (val * 0.4) * Math.sin(secondsAngle * (Math.PI / 180) - Math.PI / 2);
     createArrows(val / 2, val / 2, secondsX, secondsY, val / 100);
-
 
     let minutesX = val / 2 + (val * 0.3) * Math.cos(minutesAngle * (Math.PI / 180) - Math.PI / 2);
     let minutesY = val / 2 + (val * 0.3) * Math.sin(minutesAngle * (Math.PI / 180) - Math.PI / 2);
@@ -92,7 +86,7 @@ function showDate() {
     let hoursX = val / 2 + (val * 0.2) * Math.cos(hoursAngle * (Math.PI / 180) - Math.PI / 2);
     let hoursY = val / 2 + (val * 0.2) * Math.sin(hoursAngle * (Math.PI / 180) - Math.PI / 2);
     createArrows(val / 2, val / 2, hoursX, hoursY, val / 100 * 3);
-    setTimeout(showDate, 1000);
+
     let timeArr = [hours, minutes, seconds].map(times => String(times).padStart(2, '0'));
     let time = `${timeArr[0]}:${timeArr[1]}:${timeArr[2]}`;
     let timeBlockY = val * 0.25;
