@@ -1,3 +1,4 @@
+
 const body = document.body
 body.style.display = 'flex'
 body.style.flexDirection = 'column'
@@ -6,8 +7,8 @@ body.style.justifyContent = 'center'
 body.style.height = '100vh'
 body.style.margin = '0'
 let start = document.querySelector('.start')
-let startBallSpeedX = 3;
-let startBallSpeedY = 3;
+let startBallSpeedX = 4;
+let startBallSpeedY = 4;
 
 start.addEventListener('click', startGame)
 let continueGame = true
@@ -56,7 +57,7 @@ class Rackets {
     if (stopBorder <= racket.offsetHeight / 2) {
       stopBorder = racket.offsetHeight / 2
       this.positionY = stopBorder
-      createRacketLeft.speed = 0;
+      createRacketRight.speed = 0;
     }
     racket.style.top = `${this.positionY}px`
     this.coordinates = racket.getBoundingClientRect()
@@ -106,9 +107,13 @@ class Ball {
     this.leftScore = leftScore
     this.rightScore = rightScore
   }
-  resetBall(random) { 
+  resetBall() { 
     this.positionX = field.offsetWidth / 2 - parseFloat(this.styles.width) / 2;
     this.positionY = field.offsetHeight / 2 - parseFloat(this.styles.height) / 2;
+    createRacketLeft.positionY = field.offsetHeight / 2;
+    createRacketRight.positionY = field.offsetHeight / 2;
+    leftRacket.style.top = `${createRacketLeft.positionY}px`;
+    rightRacket.style.top = `${createRacketRight.positionY}px`;
     let signX = Math.random() > 0.5 ? 1 : -1;
     let signY = Math.random() > 0.5 ? 1 : -1;
     this.styles.speedX = startBallSpeedX * signX
@@ -135,9 +140,10 @@ class Ball {
       ball.style.left = `${this.positionX}px`
       ball.style.top = `${this.positionY}px`
       
-    if (this.positionX + radius >= field.offsetWidth) {
+    if (this.positionX + radius * 1.4 >= field.offsetWidth) {
       let score = parseFloat(this.leftScore.innerHTML)
       this.styles.speedX = 0
+      this.styles.speedY = 0
       continueGame = false
       this.leftScore.innerHTML = score + 1
 
@@ -146,6 +152,7 @@ class Ball {
     if (this.positionX - radius <= 0) {
       let score = parseFloat(this.rightScore.innerHTML)
       this.styles.speedX = 0
+      this.styles.speedY = 0
       continueGame = false
       this.rightScore.innerHTML = score + 1
     }
@@ -210,8 +217,8 @@ let ballStyles = {
   transform: 'translate(-50%, -50%)',
   top: '50%',
   left: '50%',
-  speedX: 3,
-  speedY: 3,
+  speedX: 4,
+  speedY: 4,
 }
 
 
@@ -245,36 +252,20 @@ let createBall = new Ball(ballStyles, createRacketLeft, createRacketRight, leftP
 let ball = createBall.createBall()
 field.appendChild(ball)
 
-function resetGame() {
-  ball.positionX = field.offsetWidth / 2 - parseFloat(ballStyles.width) / 2
-  ball.positionY = field.offsetHeight / 2 - parseFloat(ballStyles.height) / 2
-  ball.style.left = `${this.positionX}px`
-  ball.style.top = `${this.positionY}px`
-  continueGame = true
-}
+let gameInterval
 function startGame() {
-  if (!continueGame) {
-    resetGame()
+  if (!gameInterval) {
+    gameInterval = setInterval(gameTimer, 1000 / 60)
+  } else {
+    createBall.resetBall()
   }
-  continueGame = true;
-  requestAnimationFrame(gameTimer);
+  continueGame = true
 }
 
 function gameTimer() {
   if (continueGame) {
-    createRacketLeft.moveRacket('.left');
-    createRacketRight.moveRacket('.right');
-    createBall.newMove();
-    requestAnimationFrame(gameTimer);
-  } else {
-    start.addEventListener('click', startGame);
+    createRacketRight.moveRacket('.right')
+    createRacketLeft.moveRacket('.left')
+    createBall.newMove()
   }
-}
-
-function resetGame() {
-  createBall.resetBall();
-  createRacketLeft.positionY = field.offsetHeight / 2;
-  createRacketRight.positionY = field.offsetHeight / 2;
-  leftRacket.style.top = `${createRacketLeft.positionY}px`;
-  rightRacket.style.top = `${createRacketRight.positionY}px`;
 }
