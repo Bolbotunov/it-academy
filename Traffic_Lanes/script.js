@@ -29,13 +29,25 @@ class Road {
     this.group.appendChild(rect);
   }
 
-  createPath(d, fill, stroke, strokeWidth) {
+  createPathSVG(d, fill, stroke, strokeWidth) {
     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
     path.setAttribute('d', d);
     path.setAttribute('fill', fill);
     path.setAttribute('stroke', stroke);
     path.setAttribute('stroke-width', strokeWidth);
     this.group.appendChild(path);
+  } 
+
+  createPath(id, pathCoordinates, stroke) {
+    let route = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    route.setAttribute('id', id);
+    route.setAttribute('d', pathCoordinates);
+    route.setAttribute('stroke', stroke);
+    route.setAttribute('fill', 'transparent');
+    fieldSVG.appendChild(route);
+    let pathLength = route.getTotalLength();
+    pathsLengths[`#${id}`] = { length: pathLength, element: route }
+    console.log(pathsLengths);
   }
 
   draw() {
@@ -49,10 +61,10 @@ class Road {
   }
 
   drawCrossroads() {
-    this.createPath("M43.5588 40.059L54.5588 24.059L57.5588 5.05896H104.559L109.059 24.059L118.559 40.059L135.559 52.059L156.059 56.559V104.059L135.559 108.559L118.059 120.559L108.059 136.559L105.059 155.059H57.0588L54.0588 138.059L43.5588 120.559L27.5588 108.059L6.05884 104.059V56.059L27.0588 52.059L43.5588 40.059Z", "#D9D9D9", "none", "0");
-    this.createPath("M105.059 155.059C105.059 126.019 126.702 105.559 156.559 104.059", "none", "#E5AE09", "2");
-    this.createPath("M156.059 56.0588C127.019 56.0587 106.559 34.4154 105.059 4.55893", "none", "#E5AE09", "2");
-    this.createPath("M57.0587 5.05893C57.0586 34.0989 35.9153 54.5592 6.05884 56.059", "none", "#E5AE09", "2");
+    this.createPathSVG("M43.5588 40.059L54.5588 24.059L57.5588 5.05896H104.559L109.059 24.059L118.559 40.059L135.559 52.059L156.059 56.559V104.059L135.559 108.559L118.059 120.559L108.059 136.559L105.059 155.059H57.0588L54.0588 138.059L43.5588 120.559L27.5588 108.059L6.05884 104.059V56.059L27.0588 52.059L43.5588 40.059Z", "#D9D9D9", "none", "0");
+    this.createPathSVG("M105.059 155.059C105.059 126.019 126.702 105.559 156.559 104.059", "none", "#E5AE09", "2");
+    this.createPathSVG("M156.059 56.0588C127.019 56.0587 106.559 34.4154 105.059 4.55893", "none", "#E5AE09", "2");
+    this.createPathSVG("M57.0587 5.05893C57.0586 34.0989 35.9153 54.5592 6.05884 56.059", "none", "#E5AE09", "2");
     this.createPath("M6.05877 104.059C35.0987 104.059 55.5591 125.702 57.0588 155.559", "none", "#E5AE09", "2");
     this.createRect("6", "81", "4", "22", "", "white");
     this.createRect("152", "57", "4", "22", "", "white");
@@ -103,23 +115,14 @@ function createMap() {
     roadPart.draw();
     offsetY += 100;
   }
-
-  
 }
-
 createMap()
 
 
-
-
-
-
-
-
 const roadPath = new Road(fieldSVG); // создание пути для автомобилей
-roadPath.createPath('route1', 'M0 90 L 870 90');
-roadPath.createPath('route2', 'M870 65 L 0 65');
-
+roadPath.createPath('route3', 'M0 410 L 870 410', 'black');
+roadPath.createPath('route2', 'M870 385 L 0 385', 'grey');
+roadPath.createPath('route1', 'M0 410 L 340 410 C 440 410, 420 440, 424 480 L 424 740', 'blue');
 let elapsedTime = 0;
 let elapsedTimeTraffic = 0
 let checkTimeTraffic = 0
@@ -138,9 +141,11 @@ class Auto {
     this.duration = duration;
     this.typeCar = typeCar;
     this.animateMotion = null;
+    this.rotateCar = 0
     this.speed = speed || 3;
     this.position = 0; // Изначальная позиция машинки
     this.originalSpeed = this.speed;
+    this.prevPoint = { x: 0, y: 0 };
   }
 
  createAuto() {
@@ -161,6 +166,11 @@ class Auto {
     const pathInfo = pathsLengths[this.route];
     let index = cars.indexOf(this);
     let safeDistance = 45;
+    console.log(this.position)
+    // поворот на 376
+    // if(this.position > 390 ) {
+    //   this.rotateCar = 90
+    // }
     if (!trafficLightsOn && this.speed === 0 && elapsedTime - elapsedTimeTraffic >= waitingTime && newWaitingTime < timeOfCrazyRide) {
       newWaitingTime = elapsedTime - elapsedTimeTraffic - waitingTime
       this.speed = this.originalSpeed
@@ -169,7 +179,7 @@ class Auto {
       newWaitingTime = 0
       this.speed = 0
     }
-
+    
     if (!trafficLightsOn && this.position >= 430 && this.position < 450 && elapsedTime - elapsedTimeTraffic < waitingTime) {
       this.speed = 0;
     } else {
@@ -190,7 +200,13 @@ class Auto {
     if (this.position < pathInfo.length) {
       this.position += this.speed * 0.5;
       const point = pathInfo.element.getPointAtLength(this.position);
-      this.autoElement.setAttribute('transform', `translate(${point.x}, ${point.y - 18})`)
+      // this.autoElement.setAttribute('transform', `translate(${point.x}, ${point.y - 18}), rotate(${this.rotateCar})`)
+      const nextPoint = pathInfo.element.getPointAtLength(this.position + this.speed * 0.5);
+      const dx = nextPoint.x - point.x;
+       const dy = nextPoint.y - point.y;
+        this.rotateCar = Math.atan2(dy, dx) * (180 / Math.PI)
+      // this.prevPoint = point
+      this.autoElement.setAttribute('transform', `translate(${point.x + 18}, ${point.y - 18}), rotate(${this.rotateCar})`)
     }
     if (this.position >= pathInfo.length) {
       this.autoElement.remove();
