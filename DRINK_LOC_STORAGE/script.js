@@ -1,40 +1,20 @@
-import { LocStorageClass } from './LocStorage.js';
+import { LocStorageClass } from '/LocStorage.js';
 
 const addBtn = document.querySelector('.addBtn');
 const getBtn = document.querySelector('.getBtn');
 const deleteBtn = document.querySelector('.deleteBtn');
 const showListBtn = document.querySelector('.showListBtn');
 const infoBox = document.querySelector('.infoBox__text');
-const drinksCategory = document.querySelector('.drinks');
-const dishesCategory = document.querySelector('.dishes');
-const drinksBtn = document.querySelector('.drinksCategory');
-const dishesBtn = document.querySelector('.dishesCategory');
-let currentStorage
 
-drinksBtn.addEventListener('click', function() {
-    drinksCategory.classList.add('showCategory')
-    addBtn.innerHTML = 'Добавить напиток'
-    getBtn.innerHTML = 'Получить инфо о напитке'
-    deleteBtn.innerHTML = 'Удалить напиток'
-    drinksBtn.style.backgroundColor = 'green'
-    dishesBtn.style.backgroundColor = 'inherit'
-    drinksCategory.style.backgroundColor = 'rgb(20, 150, 201)'
-    currentStorage = new LocStorageClass('drinksStorage');
-    infoBox.innerHTML = '';
-})
+const addBtnD = document.querySelector('.addBtnD');
+const getBtnD = document.querySelector('.getBtnD');
+const deleteBtnD = document.querySelector('.deleteBtnD');
+const showListBtnD = document.querySelector('.showListBtnD');
+const infoBoxD = document.querySelector('.infoBox__textD');
 
-dishesBtn.addEventListener('click', function() {
-    drinksCategory.classList.add('showCategory')
-    addBtn.innerHTML = 'Добавить Блюдо'
-    getBtn.innerHTML = 'Получить инфо о блюде'
-    deleteBtn.innerHTML = 'Удалить блюдо'
-    dishesBtn.style.backgroundColor = 'green'
-    drinksBtn.style.backgroundColor = 'inherit'
-    drinksCategory.style.backgroundColor = 'rgb(139, 213, 150)'
-    infoBox.innerHTML = '';
-    currentStorage = new LocStorageClass('dishesStorage');
-})
 
+let drinkStorage = new LocStorageClass('drinkStorage')
+let dishesStorage = new LocStorageClass('dishStorage')
 
 addBtn.addEventListener('click', function () {
     let key = prompt('Введите название');
@@ -43,12 +23,12 @@ addBtn.addEventListener('click', function () {
     let valueRecipt = prompt('напишите рецепт приготовления');
     value.valuePrice = valuePrice;
     value.valueRecipt = valueRecipt;
-    currentStorage.addValue(key, value);
+    drinkStorage.addValue(key, value);
 });
 
 getBtn.addEventListener('click', function () {
     let itemName = prompt('введите название');
-    let itemInfo = currentStorage.getValue(itemName);
+    let itemInfo = drinkStorage.getValue(itemName);
     infoBox.innerHTML = itemInfo ? `<b>Название:</b> ${itemName} <br>
     <b> Дороже 50р:</b> ${itemInfo.valuePrice} <br>
     <b> рецепт приготовления:</b>${itemInfo.valueRecipt}` : `${itemName} нет в справочнике`;
@@ -56,16 +36,53 @@ getBtn.addEventListener('click', function () {
 
 deleteBtn.addEventListener('click', function () {
     let itemName = prompt('введите название');
-    let itemDelete = currentStorage.deleteValue(itemName);
+    let itemDelete = drinkStorage.deleteValue(itemName);
     infoBox.innerHTML = itemDelete ? `${itemName} удален из справочника` : `${itemName} нет в справочнике`;
 });
 
 showListBtn.addEventListener('click', function () {
-    let list = currentStorage.getKeys();
+    let list = drinkStorage.getKeys();
     list = list.sort((a, b) => a.localeCompare(b));
     let content = '';
     for (let i = 0; i < list.length; i++) {
         content += `${i + 1}. ${list[i]}<br>`;
     }
     infoBox.innerHTML = content || 'справочник пуст';
+});
+
+
+// ====== кнопки для dishes==========
+
+addBtnD.addEventListener('click', function () {
+    let key = prompt('Введите название');
+    let value = {};
+    let valuePrice = confirm('дороже 50р?') ? 'да' : 'нет';
+    let valueRecipt = prompt('напишите рецепт приготовления');
+    value.valuePrice = valuePrice;
+    value.valueRecipt = valueRecipt;
+    dishesStorage.addValue(key, value);
+});
+
+getBtnD.addEventListener('click', function () {
+    let itemName = prompt('введите название');
+    let itemInfo =  dishesStorage.getValue(itemName);
+    infoBoxD.innerHTML = itemInfo ? `<b>Название:</b> ${itemName} <br>
+    <b> Дороже 50р:</b> ${itemInfo.valuePrice} <br>
+    <b> рецепт приготовления:</b>${itemInfo.valueRecipt}` : `${itemName} нет в справочнике`;
+});
+
+deleteBtnD.addEventListener('click', function () {
+    let itemName = prompt('введите название');
+    let itemDelete =  dishesStorage.deleteValue(itemName);
+    infoBoxD.innerHTML = itemDelete ? `${itemName} удален из справочника` : `${itemName} нет в справочнике`;
+});
+
+showListBtnD.addEventListener('click', function () {
+    let list =  dishesStorage.getKeys();
+    list = list.sort((a, b) => a.localeCompare(b));
+    let content = '';
+    for (let i = 0; i < list.length; i++) {
+        content += `${i + 1}. ${list[i]}<br>`;
+    }
+    infoBoxD.innerHTML = content || 'справочник пуст';
 });

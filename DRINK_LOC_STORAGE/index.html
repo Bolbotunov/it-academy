@@ -8,16 +8,11 @@
 </head>
 <body>
     <div class="main__wrapper"> 
-        <div class="choice">
-            <p class="title">Выберите категорию каталога</p>
-            <button class="drinksCategory">Напитки</button>
-            <button class="dishesCategory">Блюда</button>
-        </div>
         <div class="wrapper drinks">
             <div class="btns content">
-                <button class="addBtn btn"></button>
-                <button class="getBtn btn"></button>
-                <button class="deleteBtn btn"></button>
+                <button class="addBtn btn">Добавить напиток</button>
+                <button class="getBtn btn">Получить инфо о напитке</button>
+                <button class="deleteBtn btn">Удалить напиток</button>
                 <button class="showListBtn btn">Показать справочник</button>
             </div>
             <div class="infoBox content">
@@ -25,7 +20,20 @@
                 </p>
             </div>
         </div>
-    </div>
+
+        <div class="wrapper dishes">
+            <div class="btns content">
+                <button class="addBtnD btn">Добавить Блюдо</button>
+                <button class="getBtnD btn">Получить инфо о блюде</button>
+                <button class="deleteBtnD btn">Удалить блюдо</button>
+                <button class="showListBtnD btn">Показать справочник</button>
+            </div>
+            <div class="infoBox content">
+                <p class="infoBox__textD">
+                </p>
+            </div>
+        </div>
+    </div>  
     <script type='module' src="script.js"></script>
 </body>
 </html>
