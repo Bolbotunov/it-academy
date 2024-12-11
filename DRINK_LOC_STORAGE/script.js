@@ -1,4 +1,4 @@
-import { LocStorageClass } from '/LocStorage.js';
+import { LocStorageClass } from './LocStorage.js';
 
 const addBtn = document.querySelector('.addBtn');
 const getBtn = document.querySelector('.getBtn');
