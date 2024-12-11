@@ -4,7 +4,7 @@ body{
     justify-content: center;
 }
 .main__wrapper{
-    width: 70%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -40,7 +40,7 @@ body{
     padding: 20px;
     justify-content: start;
 }
-.infoBox__text{
+.infoBox__text, .infoBox__textD{
     font-size: 24px;
     overflow-wrap: anywhere;
 }
@@ -60,35 +60,19 @@ body{
     background-color: rgb(129, 255, 74);
 }
 
-
-
 .btn:hover:nth-child(3){
     background-color: rgb(235, 102, 102);
 }
 
 .dishes{
-    display: none;
     border: 3px solid rgb(139, 213, 150);
     background-color: rgba(20, 150, 201, 0.2);
 }
 
 .drinks{
-    display: none;
     border: 3px solid rgb(136, 197, 197);
     background-color: rgba(136, 197, 197, 0.2);
 }
 .showCategory{
     display: flex;
 }
-
-
-.dishesCategory, .drinksCategory{
-    width: 120px;
-    height: 40px;
-    border-radius: 5px;
-    transition: .5s all;
-}
-
-.dishesCategory:hover, .drinksCategory:hover{
-    background-color: rgb(129, 255, 74);
-} 
