@@ -3,10 +3,29 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title></title>
+	<title>DRINKS_LOC_STORAGE</title>
+    <link rel = "stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Task</h1>
-    <script src="script.js"></script>
+    <div class="main__wrapper"> 
+        <div class="choice">
+            <p class="title">Выберите категорию каталога</p>
+            <button class="drinksCategory">Напитки</button>
+            <button class="dishesCategory">Блюда</button>
+        </div>
+        <div class="wrapper drinks">
+            <div class="btns content">
+                <button class="addBtn btn"></button>
+                <button class="getBtn btn"></button>
+                <button class="deleteBtn btn"></button>
+                <button class="showListBtn btn">Показать справочник</button>
+            </div>
+            <div class="infoBox content">
+                <p class="infoBox__text">
+                </p>
+            </div>
+        </div>
+    </div>
+    <script type='module' src="script.js"></script>
 </body>
 </html>
