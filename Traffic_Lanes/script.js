@@ -75,8 +75,8 @@ class Road {
 
 let fieldSVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 fieldSVG.style.backgroundColor = '#8fe577';
-fieldSVG.setAttribute('width', '870');
-fieldSVG.setAttribute('height', '690');
+fieldSVG.setAttribute('width', '750');
+fieldSVG.setAttribute('height', '600');
 fieldSVG.setAttribute('viewBox', '0 50 870 690');
 fieldSVG.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
 fieldSVG.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
