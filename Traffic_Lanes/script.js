@@ -1,7 +1,6 @@
 const body = document.body;
 const gameField = document.querySelector('.field')
 gameField.style.position = 'relative'
-gameField.style.border = '3px solid white'
 let start = document.querySelector('.start')
 let pathsLengths = {}
 let sizeFieldH = 600
@@ -48,7 +47,6 @@ class Road {
     fieldSVG.appendChild(route);
     let pathLength = route.getTotalLength();
     pathsLengths[`#${id}`] = { length: pathLength, element: route }
-    console.log(pathsLengths);
   }
 
   draw() {
@@ -75,11 +73,11 @@ class Road {
 }
 
 
-if (window.innerHeight < 900) {
-  sizeFieldH = 400
-  sizeFieldW = 550
-console.log(window.innerWidth)
-}
+// if (window.innerHeight < 900) {
+//   sizeFieldH = 400
+//   sizeFieldW = 550
+// console.log(window.innerWidth)
+// }
 let fieldSVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 fieldSVG.style.backgroundColor = '#8fe577';
 fieldSVG.setAttribute('width', `${sizeFieldW}`);
