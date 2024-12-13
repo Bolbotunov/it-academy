@@ -4,7 +4,8 @@ gameField.style.position = 'relative'
 gameField.style.border = '3px solid white'
 let start = document.querySelector('.start')
 let pathsLengths = {}
-
+let sizeFieldH = 600
+let sizeFieldW = 750
 start.addEventListener('click', startGame)
 
 class Road {
@@ -73,10 +74,16 @@ class Road {
   }
 }
 
+
+if (window.innerHeight < 900) {
+  sizeFieldH = 400
+  sizeFieldW = 550
+console.log(window.innerWidth)
+}
 let fieldSVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 fieldSVG.style.backgroundColor = '#8fe577';
-fieldSVG.setAttribute('width', '750');
-fieldSVG.setAttribute('height', '600');
+fieldSVG.setAttribute('width', `${sizeFieldW}`);
+fieldSVG.setAttribute('height', `${sizeFieldH}`);
 fieldSVG.setAttribute('viewBox', '0 50 870 690');
 fieldSVG.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
 fieldSVG.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
