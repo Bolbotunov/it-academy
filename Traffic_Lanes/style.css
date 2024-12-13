@@ -29,3 +29,28 @@ body{
     width: 870px;
     height: 690px;
   }
+  
+ 
+
+  @media only screen and (min-width: 800px) {
+    .orientation-warning{
+      display: none;
+    }
+    .container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      width: 100%;
+    }
+}
+
+
+  @media only screen and (max-width: 800px) and (orientation: portrait) {
+    .orientation-warning {
+      display: block;
+    }
+    .container{
+      display: none;
+    }
+  }
